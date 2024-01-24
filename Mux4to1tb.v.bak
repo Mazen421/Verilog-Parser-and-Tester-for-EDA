@@ -1,0 +1,115 @@
+`timescale 1ns/1ps
+
+
+
+module Mux4to1_tb;
+
+	reg [1:0] SEL;
+	reg A;
+	reg B;
+	reg C;
+	reg D;
+	wire F;
+Mux4to1 Mux4to1_tb (
+	.SEL(SEL),
+	.A(A),
+	.B(B),
+	.C(C),
+	.D(D),
+	.F(F)
+);
+
+
+
+	integer i;
+
+initial begin
+	#1 // Initial delay
+	//======================================================
+	// BAs Test
+	//======================================================
+
+$display("----------BLOCKING ASSIGNMENT TESTS----------");	// BA Test for RHS: A
+	A = 1'b0;
+	#1
+	A = 1'b1;
+	#1
+	#1
+	// BA Test for RHS: B
+	B = 1'b1;
+	#1
+	B = 1'b0;
+	#1
+	#1
+	// BA Test for RHS: C
+	C = 1'b0;
+	#1
+	C = 1'b1;
+	#1
+	#1
+	// BA Test for RHS: D
+	D = 1'b1;
+	#1
+	D = 1'b0;
+	#1
+	#1
+	//======================================================
+	//======================================================
+	// Random and Specific Case Test
+	//======================================================
+
+$display("----------RANDOM CASE TESTS----------");	// Case Test for CASEMEMBERS: ['SEL']
+	SEL = 2'b01;
+	#1;
+	SEL = 2'b01;
+	#1;
+	SEL = 2'b11;
+	#1;
+	SEL = 2'b01;
+	#1;
+	SEL = 2'b01;
+	#1;
+	#1;
+
+$display("----------SPECIFIC CASE TESTS----------");	// Case Attempt Test for OWNER: SEL, CASE: 2'b00
+	SEL = 2'b00;
+	#1;
+	#1;
+	// Case Attempt Test for OWNER: SEL, CASE: 2'b01
+	SEL = 2'b01;
+	#1;
+	#1;
+	// Case Attempt Test for OWNER: SEL, CASE: 2'b10
+	SEL = 2'b10;
+	#1;
+	#1;
+	// Case Attempt Test for OWNER: SEL, CASE: 2'b11
+	SEL = 2'b11;
+	#1;
+	#1;
+	//======================================================
+	//======================================================
+	// Random Test Loop
+	//======================================================
+
+$display("----------FULLY RANDOM TEST LOOP----------");		for (i = 0; i < 12345 ; i = i + 1) begin
+			SEL = {$random} % 4;
+			#1;
+			A = {$random} % 2;
+			#1;
+			B = {$random} % 2;
+			#1;
+			C = {$random} % 2;
+			#1;
+			D = {$random} % 2;
+			#1;
+		end
+$stop;
+end
+	//======================================================
+	// Monitor Block
+	//======================================================
+	initial begin
+		$monitor("Time = %0t F = %b", $time , F);	end
+
+endmodule

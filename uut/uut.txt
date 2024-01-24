@@ -1,0 +1,71 @@
+module ComplexSequentialModule(
+    input wire [7:0] vector_in,
+    input wire clk,
+    input wire reset,
+    input wire [3:0] case_test,
+    input wire case_test2,
+    input wire [6:0] test3,
+    input wire [2:0] test4,
+    input wire test5,
+    output reg [7:0] vector_out,
+    output reg [7:0] test_out,
+    input wire test_in,
+    output reg logic_out,
+    output wire logic_out2,
+    output logic_out3
+);
+
+    reg [3:0] state;
+    wire [7:0] intermediate_result;
+
+    // Continuous Assignment
+    assign test_out = vector_in;
+    assign logic_out = test_in;
+    assign logic_out = (vector_in[0] & vector_in[1]) | vector_in[2];
+
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            state <= 4'b0000;
+            vector_out <= 8'h00;
+        end else begin
+            case (case_test)
+                4'b0000:
+                    if (vector_in[0]) begin
+                        vector_out <= vector_in + 8'b00000001;
+                        state <= 4'b0001;
+                    end else if (vector_in[1]) begin
+                        vector_out <= vector_in - 8'b00000001;
+                        state <= 4'b0010;
+                    end else begin
+                        vector_out <= vector_in;
+                        state <= 4'b0000;
+                    end
+                4'b0001:
+                    // Additional logic for state 4'b0001
+                    if (vector_in[2]) begin
+                        intermediate_result <= vector_in & 8'b11110000;
+                        state <= 4'b0000;
+                    end 
+                4'b0010:
+                    reset = 1'b0;
+            endcase
+        end
+    end
+
+    // Regular Assignment
+    always @* begin
+        if (vector_in == 4'b10101010) begin
+            vector_out = vector_in;
+        end else if (vector_in == 4'b01010101) begin
+            vector_out = vector_in + 4;
+        end else if (vector_in == 4'b11001100) begin
+            vector_out = vector_in - 2;
+        end else if (vector_in == 4'b00110011) begin
+            vector_out = vector_in + 8;
+        end else if (vector_in == 4'b11111111) begin
+            vector_out = vector_in - 1;
+        end
+        // Add more conditions and assignments as needed
+    end
+
+endmodule

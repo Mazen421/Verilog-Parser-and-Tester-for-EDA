@@ -1,0 +1,143 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    XOR
+    BEGIN
+    NAND
+    MODULE_TB
+    XNOR
+    FINISH
+    DOLLAR
+    URANDOM_RANGE
+    POSEDGE
+    NOR
+
+Grammar
+
+Rule 0     S' -> module
+Rule 1     module -> MODULE ID LPAREN ports RPAREN SEMI module_body END MODULE SEMI
+Rule 2     ports -> port
+Rule 3     ports -> ports COMMA port
+Rule 4     port -> INPUT data_type ID vector SEMI
+Rule 5     port -> OUTPUT data_type ID vector SEMI
+Rule 6     empty -> <empty>
+Rule 7     module_body -> module_items
+Rule 8     module_items -> module_item
+Rule 9     module_items -> module_items module_item
+Rule 10    module_item -> declaration SEMI
+Rule 11    module_item -> always_statement
+Rule 12    module_item -> initial_statement
+Rule 13    module_item -> continuous_assign SEMI
+Rule 14    module_item -> conditional_statement
+Rule 15    module_item -> case_statement
+Rule 16    module_item -> assign_statement SEMI
+Rule 17    declaration -> data_type list_of_variables
+Rule 18    data_type -> REG
+Rule 19    data_type -> WIRE
+Rule 20    data_type -> INTEGER_PART TIME_UNIT
+Rule 21    list_of_variables -> variable
+Rule 22    list_of_variables -> list_of_variables COMMA variable
+Rule 23    variable -> ID vector
+Rule 24    vector -> empty
+Rule 25    vector -> LBRACKET INTEGER COLON INTEGER RBRACKET
+Rule 26    always_statement -> ALWAYS sensitivity_list module_body END ALWAYS
+Rule 27    sensitivity_list -> AT LPAREN list_of_signals RPAREN
+Rule 28    list_of_signals -> signal
+Rule 29    list_of_signals -> list_of_signals COMMA signal
+Rule 30    signal -> ID
+Rule 31    signal -> ID LBRACKET expression RBRACKET
+Rule 32    initial_statement -> INITIAL module_body END INITIAL
+Rule 33    continuous_assign -> ASSIGN assignment
+Rule 34    assignment -> lvalue ASSIGN expression
+Rule 35    lvalue -> ID
+Rule 36    lvalue -> ID LBRACKET expression RBRACKET
+Rule 37    expression -> primary
+Rule 38    expression -> expression AND primary
+Rule 39    expression -> expression OR primary
+Rule 40    expression -> NOT primary
+Rule 41    primary -> ID
+Rule 42    primary -> INTEGER
+Rule 43    primary -> LPAREN expression RPAREN
+Rule 44    conditional_statement -> IF LPAREN expression RPAREN statement
+Rule 45    conditional_statement -> IF LPAREN expression RPAREN statement ELSE statement
+Rule 46    case_statement -> CASE expression case_items END CASE
+Rule 47    case_items -> case_item
+Rule 48    case_items -> case_items case_item
+Rule 49    case_item -> expression COLON statement
+Rule 50    case_item -> DEFAULT COLON statement
+Rule 51    assign_statement -> lvalue ASSIGN expression
+
+Terminals, with rules where they appear
+
+ALWAYS               : 26 26
+AND                  : 38
+ASSIGN               : 33 34 51
+AT                   : 27
+BEGIN                : 
+CASE                 : 46 46
+COLON                : 25 49 50
+COMMA                : 3 22 29
+DEFAULT              : 50
+DOLLAR               : 
+END                  : 1 26 32 46
+FINISH               : 
+ID                   : 1 4 5 23 30 31 35 36 41
+IF                   : 44 45
+INITIAL              : 32 32
+INPUT                : 4
+INTEGER              : 25 25 42
+INTEGER_PART         : 20
+LBRACKET             : 25 31 36
+LPAREN               : 1 27 43 44 45
+MODULE               : 1 1
+MODULE_TB            : 
+NAND                 : 
+NOR                  : 
+NOT                  : 40
+OR                   : 39
+OUTPUT               : 5
+POSEDGE              : 
+RBRACKET             : 25 31 36
+REG                  : 18
+RPAREN               : 1 27 43 44 45
+SEMI                 : 1 1 4 5 10 13 16
+TIME_UNIT            : 20
+URANDOM_RANGE        : 
+WIRE                 : 19
+XNOR                 : 
+XOR                  : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+ELSE                 : 45
+always_statement     : 11
+assign_statement     : 16
+assignment           : 33
+case_item            : 47 48
+case_items           : 46 48
+case_statement       : 15
+conditional_statement : 14
+continuous_assign    : 13
+data_type            : 4 5 17
+declaration          : 10
+empty                : 24
+expression           : 31 34 36 38 39 43 44 45 46 49 51
+initial_statement    : 12
+list_of_signals      : 27 29
+list_of_variables    : 17 22
+lvalue               : 34 51
+module               : 0
+module_body          : 1 26 32
+module_item          : 8 9
+module_items         : 7 9
+port                 : 2 3
+ports                : 1 3
+primary              : 37 38 39 40
+sensitivity_list     : 26
+signal               : 28 29
+statement            : 44 45 45 49 50
+variable             : 21 22
+vector               : 4 5 23
+
