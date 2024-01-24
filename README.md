@@ -20,7 +20,7 @@ This a parser for Verilog written in Python with the purpose of making tests for
 
 ## Back-End
 
-The code was written in co-op coding lead by [Ahmed Elsheikh]((https://github.com/HaoTurnip) in Python 2.7.1
+The code was written in co-op coding lead by [Ahmed Elsheikh](https://github.com/HaoTurnip) in Python 2.7.1
 
 | Libraries Used          |
 | ----------------------- |
